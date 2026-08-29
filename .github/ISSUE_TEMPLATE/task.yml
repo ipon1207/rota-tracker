@@ -1,0 +1,69 @@
+name: 実装タスク
+description: 機能追加・改修など、手を動かす作業
+title: "[task] "
+labels: ["task"]
+body:
+  - type: dropdown
+    id: phase
+    attributes:
+      label: フェーズ
+      description: 移植設計のフェーズ番号
+      options:
+        - "0: 環境構築"
+        - "1: スキーマ・シード・読み取りAPI"
+        - "2: 型生成・TanStack Query"
+        - "3: TanStack Table・React Router"
+        - "4: 記録の読み書き・Zod・楽観的更新"
+        - "5: ガイド・用語集・ロードマップ"
+        - "6: テスト整備・CI"
+        - "7: 任意（デモ移植・車輪SVG・複数ユーザー化）"
+        - "対象外・単発"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: layer
+    attributes:
+      label: 対象
+      options:
+        - label: web（フロント）
+        - label: api（ASP.NET Core）
+        - label: db（スキーマ・シード）
+        - label: tooling（ビルド・Lint・CI）
+
+  - type: textarea
+    id: what
+    attributes:
+      label: やること
+      description: 実装方針が決まっていれば併せて。決まっていなければ空でよい
+      placeholder: |
+        例）GET /api/projects を Dapper で実装する。
+        カテゴリとの multi-mapping で1クエリにまとめたい。
+    validations:
+      required: true
+
+  - type: textarea
+    id: done
+    attributes:
+      label: 完了条件
+      description: 「何が動いたら閉じるか」を先に書く。曖昧なまま着手しない
+      placeholder: |
+        - [ ] 45件が正しい並び順で返る
+        - [ ] 難易度が null のプロジェクトも落ちない
+        - [ ] xUnit で件数と並び順を検証している
+    validations:
+      required: true
+
+  - type: textarea
+    id: learning
+    attributes:
+      label: 学習ポイント
+      description: このタスクで初めて触る技術・確かめたいこと。ここが空なら、そのタスクは作業でしかない
+      placeholder: |
+        Dapper の multi-mapping（splitOn の指定位置）
+
+  - type: textarea
+    id: refs
+    attributes:
+      label: 参考
+      description: 公式ドキュメント、業務での類似実装、関連Issueなど

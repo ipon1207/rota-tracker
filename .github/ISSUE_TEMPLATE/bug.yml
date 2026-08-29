@@ -1,0 +1,51 @@
+name: 不具合
+description: 動かない・想定と違う挙動
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: 症状
+      placeholder: |
+        例）ステータスを「完了」にしてリロードすると「未着手」に戻る
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 再現手順
+      placeholder: |
+        1. /projects を開く
+        2. cli-ls の行をクリックして完了にする
+        3. F5 でリロードする
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待した挙動 / 実際の挙動
+      placeholder: |
+        期待: 完了のまま
+        実際: 未着手に戻る。Network を見ると PATCH は 200 が返っている
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: layer
+    attributes:
+      label: 疑っている箇所
+      description: 切り分け前なら全部空でよい
+      options:
+        - label: web（フロント）
+        - label: api（ASP.NET Core）
+        - label: db（スキーマ・データ）
+        - label: まだ切り分けできていない
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 調べたこと
+      description: ログ、エラーメッセージ、試して駄目だったこと。後から自分が読む前提で

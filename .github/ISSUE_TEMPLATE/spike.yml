@@ -1,0 +1,47 @@
+name: 調査・学習
+description: 手を動かす前に確かめたいこと、技術選定、仕組みの理解
+title: "[spike] "
+labels: ["spike"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: 知りたいこと
+      description: 疑問文で1つに絞る。複数あるなら Issue を分ける
+      placeholder: |
+        例）TanStack Query の楽観的更新は、
+        onMutate でのロールバックと invalidateQueries をどう併用するのが定石か
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: なぜ必要か
+      description: どのタスクが詰まっているか、何を決めたいか
+      placeholder: |
+        #12 のステータス切り替えで、連打すると表示が巻き戻る
+
+  - type: textarea
+    id: done
+    attributes:
+      label: 何が書けたら終わりか
+      description: 調査は完了条件を決めないと無限に続く
+      placeholder: |
+        - [ ] 採用する方式と、採らなかった方式を1行ずつ書ける
+        - [ ] 最小の再現コードで挙動を確認した
+    validations:
+      required: true
+
+  - type: input
+    id: timebox
+    attributes:
+      label: タイムボックス
+      description: 超えたら、いったん結論を書いて閉じる
+      placeholder: "60分"
+
+  - type: textarea
+    id: refs
+    attributes:
+      label: 出発点
+      description: 公式ドキュメント、業務コードの該当箇所など
