@@ -1,4 +1,4 @@
-﻿namespace WheelTracker.Tests;
+namespace WheelTracker.Tests;
 
 public class UnitTest1
 {

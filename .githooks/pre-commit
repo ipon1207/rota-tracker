@@ -1,0 +1,23 @@
+#!/bin/sh
+# 速いチェックだけを置く。重いものは pre-push へ。
+set -eu
+
+staged=$(git diff --cached --name-only --diff-filter=ACMR)
+
+if [ -z "$staged" ]; then
+  exit 0
+fi
+
+if printf '%s\n' "$staged" | grep -q '^web/'; then
+  echo "▶ web: 整形チェック"
+  (cd web && npm run format:check)
+  echo "▶ web: Lint"
+  (cd web && npm run lint)
+fi
+
+if printf '%s\n' "$staged" | grep -qE '\.cs$'; then
+  echo "▶ api: 整形チェック"
+  dotnet format api/WheelTracker.slnx --verify-no-changes
+fi
+
+echo "✔ pre-commit OK"
