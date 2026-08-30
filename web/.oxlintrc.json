@@ -1,0 +1,80 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "react", "import", "promise", "jsx-a11y", "oxc"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn"
+  },
+  "env": {
+    "builtin": true,
+    "browser": true
+  },
+  "options": {
+    "typeAware": true
+  },
+  "rules": {
+    "eslint/eqeqeq": "error",
+    "eslint/no-console": "warn",
+
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "error",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }],
+    "react/react-in-jsx-scope": "off",
+
+    "typescript/no-explicit-any": "error",
+    "typescript/consistent-type-imports": "warn",
+    "typescript/no-non-null-assertion": "warn",
+    "typescript/ban-ts-comment": ["error", { "ts-expect-error": "allow-with-description" }],
+
+    "typescript/no-floating-promises": "error",
+    "typescript/no-misused-promises": "error",
+    "typescript/await-thenable": "error",
+
+    "import/no-duplicates": "error",
+    "import/no-cycle": "warn",
+    "import/no-unassigned-import": ["warn", { "allow": ["**/*.css"] }],
+
+    "promise/no-return-wrap": "warn"
+  },
+  "ignorePatterns": [
+    "**/dist/**",
+    "**/coverage/**",
+    "**/playwright-report/**",
+    "**/test-results/**",
+    "src/lib/api/schema.gen.ts"
+  ],
+  "overrides": [
+    {
+      "files": ["src/components/ui/**"],
+      "rules": {
+        "react/only-export-components": "off",
+        "typescript/no-explicit-any": "off",
+        "typescript/no-non-null-assertion": "off"
+      }
+    },
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx"],
+      "plugins": ["typescript", "react", "import", "promise", "jsx-a11y", "oxc", "vitest"],
+      "rules": {
+        "vitest/no-focused-tests": "error",
+        "vitest/no-disabled-tests": "warn",
+        "typescript/no-non-null-assertion": "off"
+      }
+    },
+    {
+      "files": ["e2e/**"],
+      "rules": {
+        "eslint/no-console": "off",
+        "typescript/no-non-null-assertion": "off"
+      }
+    },
+    {
+      "files": ["**/*.config.ts", "**/*.config.mts"],
+      "rules": {
+        "eslint/no-console": "off",
+        "typescript/no-explicit-any": "off"
+      }
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "js/ts.preferences.importModuleSpecifier":"non-relative",
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.formatOnSave": true
+}
