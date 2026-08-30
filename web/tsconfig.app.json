@@ -25,7 +25,10 @@
     /* shadcn/ui用の設定 */
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+
+    /* 型チェックを厳格に行う */
+    "strict": true
   },
   "include": ["src"]
 }
