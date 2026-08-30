@@ -1,0 +1,14 @@
+#!/bin/sh
+# 型チェックとテスト。数十秒かかってよい。
+set -eu
+
+echo "▶ web: 型チェック"
+(cd web && npm run typecheck)
+
+echo "▶ web: 単体テスト"
+(cd web && npm run test)
+
+echo "▶ api: ビルドとテスト"
+dotnet test api/WheelTracker.slnx
+
+echo "✔ pre-push OK"
