@@ -1,8 +1,13 @@
+using WheelTracker.Api.Data;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddSingleton<SqlConnectionFactory>();
+builder.Services.AddScoped<ProjectRepository>();
 
 WebApplication app = builder.Build();
 
@@ -13,3 +18,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapGet("/api/projects", async (ProjectRepository repo) => await repo.GetAllAsync());
+
+app.Run();
