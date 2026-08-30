@@ -111,6 +111,16 @@
   "dotnet.formatting.organizeImportsOnFormat": true,
 
   // ============================================================
+  // SQL (mssql 拡張)
+  // 整形の設定は上の [sql] を参照
+  // ============================================================
+  // 既定は null (未決定) で、「SQL Server でない SQL ファイルが検出されました。
+  // IntelliSense を無効にしますか?」の確認が毎回出る。
+  // db/*.sql は Microsoft.Data.SqlClient から流す T-SQL なので誤検出。
+  // false = 自動無効化しない（＝ IntelliSense を維持し、確認も出さない）
+  "mssql.autoDisableNonTSqlLanguageService": false,
+
+  // ============================================================
   // テスト (Vitest / Playwright)
   // 設定ファイルは web/vite.config.ts と web/playwright.config.ts の
   // 各1つだけで、どちらの拡張も自動検出できるためパス指定は不要。
