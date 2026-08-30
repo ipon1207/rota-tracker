@@ -9,6 +9,7 @@
 ### task
 
 - [3-フロントエンド側の環境構築.md](./docs/task/3-フロントエンド側の環境構築.md)
+- [5-pre-commitの設定.md](./docs/task/oxlint-setup-notes.md)
 
 ### bug
 
