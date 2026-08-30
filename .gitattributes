@@ -1,1 +1,26 @@
-* text=auto
+# 改行コードはリポジトリ全体で LF に統一する。
+#
+# text=auto だけだと、コミット時に LF へ正規化される一方、
+# チェックアウト時の改行は各開発者の core.autocrlf 任せになる。
+# Windows の既定 (core.autocrlf=true) では CRLF で展開されるため、
+# .editorconfig (end_of_line = lf) や web/.oxfmtrc.json (endOfLine: "lf") と
+# 食い違い、npm run format:check が内容と無関係に失敗する。
+# oxfmt は endOfLine: "auto" を持たないので、ワークツリー側を LF に揃える。
+* text=auto eol=lf
+
+# C# は .editorconfig の [*.cs] が end_of_line = crlf を指定しており、
+# dotnet format がそれを検証する。LF で展開すると pre-commit が落ちるため合わせる。
+*.cs text eol=crlf
+
+# Windows のバッチファイルは CRLF でないと正しく動かない
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# バイナリ (text=auto でも判定されるが、誤判定を防ぐため明示する)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
