@@ -49,6 +49,14 @@
   "[css]": { "editor.defaultFormatter": "vscode.css-language-features" },
   "[html]": { "editor.defaultFormatter": "vscode.html-language-features" },
 
+  // SQL は保存時に自動整形しない。
+  // ms-mssql.mssql が sql 言語の唯一のフォーマッタとして登録されているため、
+  // 指定しないと VSCode の自動選択でこれが使われ、
+  // mssql.format.options.numNewlinesAfterStatement (既定 1) により
+  // 文と文の間に空白行が入る。schema.sql / seed.sql は手で整えたい。
+  // 整形したいときは Shift+Alt+F で明示的に実行する（キーワードは大文字化される）。
+  "[sql]": { "editor.formatOnSave": false },
+
   // 学習ログ（日本語の散文）が保存のたびに整形されると差分が読みにくいので無効。
   // .editorconfig の [*.md] に合わせ、行末スペースの除去も止める。
   "[markdown]": {
@@ -101,6 +109,16 @@
   // dotnet format はそれを適用する。既定 false のままだとエディタ保存時だけ
   // using が整理されず、コミット時に初めて差分が出るため true にする。
   "dotnet.formatting.organizeImportsOnFormat": true,
+
+  // ============================================================
+  // SQL (mssql 拡張)
+  // 整形の設定は上の [sql] を参照
+  // ============================================================
+  // 既定は null (未決定) で、「SQL Server でない SQL ファイルが検出されました。
+  // IntelliSense を無効にしますか?」の確認が毎回出る。
+  // db/*.sql は Microsoft.Data.SqlClient から流す T-SQL なので誤検出。
+  // false = 自動無効化しない（＝ IntelliSense を維持し、確認も出さない）
+  "mssql.autoDisableNonTSqlLanguageService": false,
 
   // ============================================================
   // テスト (Vitest / Playwright)

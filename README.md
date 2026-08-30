@@ -12,6 +12,7 @@
 - [5-pre-commitの設定](./docs/task/5-pre-commitの設定.md)
 - [8-TypeScriptのstrictを有効にする](./docs/task/8-TypeScriptのstrictを有効にする.md)
 - [10-VSCodeの設定を整備する](./docs/task/10-VSCodeの設定を整備する.md)
+- [11-DB環境の構築](./docs/task/11-DB環境の構築.md)
 
 ### bug
 
