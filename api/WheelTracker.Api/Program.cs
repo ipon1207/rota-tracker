@@ -1,5 +1,8 @@
 using WheelTracker.Api.Data;
 
+// 列名とRecorのプロパティ名と一致させるための設定
+Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
