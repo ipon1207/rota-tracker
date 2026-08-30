@@ -1,0 +1,25 @@
+{
+  "recommendations": [
+    // Lint (oxlint) と整形 (oxfmt)。このリポジトリの整形はすべてこれが担当する
+    "oxc.oxc-vscode",
+
+    // .editorconfig を適用する。無くても settings.json 側で概ね揃うが入れておくと確実
+    "editorconfig.editorconfig",
+
+    // C# / ASP.NET Core
+    "ms-dotnettools.csharp",
+
+    // Tailwind CSS v4 のクラス名補完
+    "bradlc.vscode-tailwindcss",
+
+    // e2e (playwright.config.ts / e2e/)
+    "ms-playwright.playwright",
+
+    // 単体テスト (vitest)
+    "vitest.explorer"
+  ],
+
+  // このリポジトリでは使わない。設定ファイルが無いため誤作動や
+  // oxfmt との整形の奪い合いの原因になる
+  "unwantedRecommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
+}

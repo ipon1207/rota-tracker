@@ -1,5 +1,142 @@
 {
-  "js/ts.preferences.importModuleSpecifier":"non-relative",
-  "editor.defaultFormatter": "oxc.oxc-vscode",
-  "editor.formatOnSave": true
+  // ============================================================
+  // TypeScript
+  // ============================================================
+  // tsconfig の paths ("@/*" -> ./src/*) に合わせ、自動 import を非相対で挿入する
+  "js/ts.preferences.importModuleSpecifier": "non-relative",
+
+  // エディタの型チェックを CLI (npm run typecheck) と一致させる。
+  // 現状は VSCode 同梱・プロジェクトともに TypeScript 6.0.3 で一致しているが、
+  // VSCode を更新した際にズレるのを防ぐ保険。
+  // 初回のみ「ワークスペースのバージョンを使うか」を尋ねられるので許可すること。
+  "js/ts.tsdk.path": "web/node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+
+  // ============================================================
+  // 整形
+  // oxfmt が扱うのは JS/TS のみ。既定フォーマッタを全体に適用すると
+  // .cs や .json まで oxfmt 担当になってしまうため、言語ごとに明示する。
+  // ============================================================
+  "editor.formatOnSave": true,
+
+  // JSON の整形時に既存の改行位置を維持する。
+  // 既定 (false) だと行を組み直すため、この設定ファイルや .oxlintrc.json の
+  // 空白行・1行に書いた配列が保存のたびに潰される。
+  "json.format.keepLines": true,
+
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.codeActionsOnSave": { "source.fixAll": "explicit" }
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.codeActionsOnSave": { "source.fixAll": "explicit" }
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.codeActionsOnSave": { "source.fixAll": "explicit" }
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode",
+    "editor.codeActionsOnSave": { "source.fixAll": "explicit" }
+  },
+
+  // .cs は dotnet format / C# 拡張の担当（pre-commit の dotnet format と揃う）
+  "[csharp]": { "editor.defaultFormatter": "ms-dotnettools.csharp" },
+
+  "[json]": { "editor.defaultFormatter": "vscode.json-language-features" },
+  "[jsonc]": { "editor.defaultFormatter": "vscode.json-language-features" },
+  "[css]": { "editor.defaultFormatter": "vscode.css-language-features" },
+  "[html]": { "editor.defaultFormatter": "vscode.html-language-features" },
+
+  // 学習ログ（日本語の散文）が保存のたびに整形されると差分が読みにくいので無効。
+  // .editorconfig の [*.md] に合わせ、行末スペースの除去も止める。
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "files.trimTrailingWhitespace": false
+  },
+
+  // ============================================================
+  // 改行コード・空白
+  // .editorconfig の [*] と .oxfmtrc.json (endOfLine: "lf") に合わせる。
+  // EditorConfig 拡張が無い環境でも同じ挙動になるよう明示している。
+  // ============================================================
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+
+  // ============================================================
+  // Lint
+  // このリポジトリの Lint は oxlint、整形は oxfmt。
+  // ESLint / Prettier の設定ファイルは存在しないため、
+  // 拡張がインストールされていてもこのワークスペースでは無効化する。
+  // ============================================================
+  "eslint.enable": false,
+  "prettier.enable": false,
+
+  // ============================================================
+  // Tailwind CSS v4
+  // tailwind.config.js は無く、web/src/index.css の @import で設定する方式。
+  // 設定ファイルを明示しないと拡張がクラス名を認識できない。
+  // ============================================================
+  "tailwindCSS.experimental.configFile": "web/src/index.css",
+
+  // 補完対象の関数。.oxfmtrc.json の sortTailwindcss.functions と
+  // 必ず同じ内容に保つこと（片方だけ足すと補完とソートがズレる）
+  "tailwindCSS.classFunctions": [ "cn", "cva", "clsx", "twMerge" ],
+
+  // VSCode 標準の CSS 言語機能は Tailwind v4 の @theme / @custom-variant を
+  // 知らないため "Unknown at rule" を警告として出す。
+  // src/index.css は実際に両方を使っているので警告を止める。
+  "css.lint.unknownAtRules": "ignore",
+
+  // ============================================================
+  // .NET
+  // ソリューションがリポジトリルート直下に無いため明示する
+  // ============================================================
+  "dotnet.defaultSolution": "api/WheelTracker.slnx",
+
+  // .editorconfig の [*.cs] は using の並び順を定めており
+  // (dotnet_sort_system_directives_first / IDE0005)、pre-commit の
+  // dotnet format はそれを適用する。既定 false のままだとエディタ保存時だけ
+  // using が整理されず、コミット時に初めて差分が出るため true にする。
+  "dotnet.formatting.organizeImportsOnFormat": true,
+
+  // ============================================================
+  // テスト (Vitest / Playwright)
+  // 設定ファイルは web/vite.config.ts と web/playwright.config.ts の
+  // 各1つだけで、どちらの拡張も自動検出できるためパス指定は不要。
+  // 以下は動作に必須ではなく、使い勝手のための指定。
+  // ============================================================
+
+  // 既定の "verbose" は出力チャネルが冗長になるため下げる
+  "vitest.logLevel": "info",
+
+  // 実行のたびにブラウザを起動し直さず再利用する（ローカルのデバッグが速くなる）
+  "playwright.reuseBrowser": true,
+
+  // ============================================================
+  // 除外
+  // ============================================================
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/bin": true,
+    "**/obj": true,
+    "**/.vs": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bin": true,
+    "**/obj": true,
+    "**/dist": true,
+    "**/playwright-report": true,
+    "**/test-results": true,
+    "**/package-lock.json": true
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/bin/**": true,
+    "**/obj/**": true,
+    "**/dist/**": true
+  }
 }
