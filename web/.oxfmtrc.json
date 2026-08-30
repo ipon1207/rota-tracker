@@ -19,7 +19,8 @@
     "playwright-report/**",
     "test-results/**",
     "src/lib/api/schema.gen.ts",
-    ".oxfmtrc.json",
-    "package.json"
+    "package.json",
+    "components.json",
+    "index.html"
   ]
 }
