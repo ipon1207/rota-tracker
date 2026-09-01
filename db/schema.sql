@@ -20,7 +20,7 @@ CREATE TABLE project (
      id          NVARCHAR(30)  PRIMARY KEY
     ,category_id NVARCHAR(20)  NOT NULL
     ,title       NVARCHAR(120) NOT NULL
-    ,difficulty  TINYINT       NULL
+    ,difficulty  INT       NULL
     ,sort_order  INT           NOT NULL
     ,FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE
 );
