@@ -11,6 +11,8 @@
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "typecheck": "tsc -b",
+    "gen:openapi": "dotnet build ../api/WheelTracker.Api",
+    "gen:api": "npm run gen:openapi && openapi-typescript ../api/WheelTracker.Api/OpenAPISchema/WheelTracker.Api.json -o src/lib/api/schema.gen.ts",
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest",
     "test:cov": "vitest run --coverage",
