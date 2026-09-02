@@ -6,7 +6,7 @@ import type { components } from '@/lib/api/schema.gen';
 type Project = components['schemas']['Project'];
 
 function App() {
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isPending, isError, error } = useQuery({
     queryKey: ['projects'],
     queryFn: async () => {
       const response = await fetch('/api/projects');
@@ -17,7 +17,7 @@ function App() {
     },
   });
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className="p-8">
         <p className="text-gray-500">読み込み中...</p>
