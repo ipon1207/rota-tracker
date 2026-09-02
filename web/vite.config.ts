@@ -17,4 +17,12 @@ export default defineConfig({
     include: ['src/**/*.test.{ts,tsx}'],
     environment: 'node',
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5243',
+        changeOrigin: true,
+      },
+    },
+  },
 });

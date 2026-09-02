@@ -12,6 +12,10 @@
   "js/ts.tsdk.path": "web/node_modules/typescript/lib",
   "js/ts.tsdk.promptToUseWorkspaceVersion": true,
 
+  // パッケージの補完候補を出す
+  "js/ts.preferences.includePackageJsonAutoImports": "on",
+  "js/ts.suggest.autoImports": true,
+
   // ============================================================
   // 整形
   // oxfmt が扱うのは JS/TS のみ。既定フォーマッタを全体に適用すると
