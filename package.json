@@ -1,0 +1,8 @@
+{
+  "name": "rota-tracker",
+  "private": true,
+  "description": "リポジトリ全体の開発ツール置き場",
+  "devDependencies": {
+    "lefthook": "^2.1.12"
+  }
+}
