@@ -1,0 +1,37 @@
+# pre-commitは軽量チェック
+pre-commit:
+  parallel: true
+  # コンフリクトの解消中やリベース中実行しない
+  skip:
+    - merge
+    - rebase
+  jobs:
+    - name: web-format
+      root: "web/"
+      glob: "*.{ts,tsx,js,jsx,json,css,html}"
+      run: npm run format:check
+
+    - name: web-lint
+      root: "web/"
+      glob: "*.{ts,tsx,js,jsx}"
+      run: npm run lint
+
+    - name: api-format
+      root: "api/"
+      glob: "*.cs"
+      run: dotnet format --verify-no-changes
+
+pre-push:
+  parallel: false
+  jobs:
+    - name: web-typecheck
+      root: "web/"
+      run: npm run typecheck
+
+    - name: web-test
+      root: "web/"
+      run: npm run test
+
+    - name: api-test
+      root: "api/"
+      run: dotnet test
