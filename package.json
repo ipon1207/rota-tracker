@@ -4,5 +4,9 @@
   "description": "リポジトリ全体の開発ツール置き場",
   "devDependencies": {
     "lefthook": "^2.1.12"
+  },
+  "engines": {
+    "node": "24.13.1",
+    "npm": "11.12.1"
   }
 }
