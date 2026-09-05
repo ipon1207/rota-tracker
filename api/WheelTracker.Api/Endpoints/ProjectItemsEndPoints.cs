@@ -7,7 +7,9 @@ public static class ProjectItemsEndPoints
 {
     public static void RegisterProjectItemsEndPoints(this WebApplication app)
     {
-        app.MapGet("/api/projects", GetAllProjectsAsync);
+        RouteGroupBuilder projectsItems = app.MapGroup("/api/projects");
+
+        projectsItems.MapGet("/", GetAllProjectsAsync);
     }
 
     static async Task<Ok<IReadOnlyList<Project>>> GetAllProjectsAsync(ProjectRepository repo) =>
