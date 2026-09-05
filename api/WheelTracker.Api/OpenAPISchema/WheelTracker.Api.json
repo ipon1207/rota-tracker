@@ -16,13 +16,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Project"
-                  }
+                  "$ref": "#/components/schemas/Project"
                 }
               }
             }
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
