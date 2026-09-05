@@ -7,8 +7,9 @@ public static class ProjectItemsEndPoints
 {
     public static void RegisterProjectItemsEndPoints(this WebApplication app)
     {
-        app.MapGet("/api/projects", async Task<Ok<IReadOnlyList<Project>>> (ProjectRepository repo) =>
-            TypedResults.Ok(await repo.GetAllAsync())
-        );
+        app.MapGet("/api/projects", GetAllProjectsAsync);
     }
+
+    static async Task<Ok<IReadOnlyList<Project>>> GetAllProjectsAsync(ProjectRepository repo) =>
+        TypedResults.Ok(await repo.GetAllAsync());
 }
