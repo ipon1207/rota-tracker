@@ -1,4 +1,5 @@
 using WheelTracker.Api.Data;
+using WheelTracker.Api.Endpoints;
 
 // 列名とRecorのプロパティ名と一致させるための設定
 Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
@@ -22,6 +23,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/api/projects", async (ProjectRepository repo) => await repo.GetAllAsync());
+app.RegisterProjectItemsEndPoints();
 
 app.Run();
