@@ -93,7 +93,8 @@ export type EvaluationStatus = 'notStarted' | 'inProgress' | 'submitted';
 
 ## 3. React コンポーネント
 
-**propsの説明はProps型側に書き、コンポーネント本体には「何のためのUIか」だけを書く**
+- **propsの説明はProps型側に書く**
+- **コンポーネント本体には「何のためのUIか」だけを書く**
 
 両方に書くと必ず片方が腐る
 
