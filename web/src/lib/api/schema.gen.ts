@@ -43,11 +43,18 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** @description Projectテーブルのレコード構造 */
         Project: {
+            /** @description id */
             id: string;
+            /** @description category_id */
             categoryId: string;
+            /** @description title */
             title: string;
-            /** Format: int32 */
+            /**
+             * Format: int32
+             * @description difficulty
+             */
             difficulty: null | number | string;
         };
     };

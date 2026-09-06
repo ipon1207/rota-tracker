@@ -3,15 +3,22 @@ using WheelTracker.Api.Data;
 
 namespace WheelTracker.Api.Endpoints;
 
-public static class ProjectItemsEndPoints
+public static class ProjectItemsEndpoints
 {
     public static void RegisterProjectItemsEndPoints(this WebApplication app)
     {
-        RouteGroupBuilder projectsItems = app.MapGroup("/api/projects");
+        RouteGroupBuilder projectItems = app.MapGroup("/api/projects");
 
-        projectsItems.MapGet("/", GetAllProjectsAsync);
+        projectItems.MapGet("/", GetAllProjectsAsync);
     }
 
+    /// <summary>
+    /// 登録済みプロジェクトを全件取得
+    /// </summary>
+    /// <returns>
+    /// プロジェクトの一覧
+    /// 該当が0件の場合は空配列を返す
+    /// </returns>
     static async Task<Ok<IReadOnlyList<Project>>> GetAllProjectsAsync(ProjectRepository repo) =>
         TypedResults.Ok(await repo.GetAllAsync());
 }

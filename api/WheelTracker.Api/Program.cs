@@ -1,13 +1,13 @@
 using WheelTracker.Api.Data;
 using WheelTracker.Api.Endpoints;
 
-// 列名とRecorのプロパティ名と一致させるための設定
+// WHY: DB側の列名が snake_case のため、PascalCase のプロパティへ自動マッピングさせる
+// NOTE: アプリ全体に効くグローバル設定
+//       プロパティ名を変更するとコンパイルエラーにならず、実行時に既定値が入る
 Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 builder.Services.AddSingleton<SqlConnectionFactory>();
@@ -15,7 +15,6 @@ builder.Services.AddScoped<ProjectRepository>();
 
 WebApplication app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
