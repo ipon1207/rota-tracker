@@ -2,6 +2,11 @@
 
 ## コーディング規約
 
+### アーキテクチャ
+
+- [フロントエンドアーキテクチャ](./docs/FRONTEND_ARCHITECTURE.md)
+- [バックエンドアーキテクチャ](./docs/BACKEND_ARCHITECTURE.md)
+
 ### コメント規約
 
 - [コメント規約](./docs/COMMENT_GUIDE.md)
