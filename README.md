@@ -25,6 +25,7 @@
 - [17-TanStack Queryでプロジェクト一覧を表示する](./docs/task/17-TanStackQueryでプロジェクト一覧を表示する.md)
 - [22-GitHooksをLeftHookに変更する](./docs/task/22-GitHooksをLeftHookに変更する.md)
 - [33-npmとnodeのバージョン固定](./docs/task/33-npmとnodeのバージョン固定.md)
+- [35-コメント規約の作成](./docs/task/36-コメント規約の作成.md)
 
 ### bug
 
