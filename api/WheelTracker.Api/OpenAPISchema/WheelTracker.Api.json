@@ -8,7 +8,7 @@
     "/api/projects": {
       "get": {
         "tags": [
-          "WheelTracker.Api"
+          "ProjectItemsEndPoints"
         ],
         "responses": {
           "200": {
@@ -63,7 +63,7 @@
   },
   "tags": [
     {
-      "name": "WheelTracker.Api"
+      "name": "ProjectItemsEndPoints"
     }
   ]
 }

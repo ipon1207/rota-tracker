@@ -12,6 +12,7 @@
 
 - [1-バックエンド側の環境構築](./docs/spike/1-バックエンド側の環境構築.md)
 - [19-Dapperで接続を供給するパターンについて調べる](./docs/spike/19-Dapperで接続を供給するパターンについて調べる.md)
+- [27-アーキテクチャテストの調査](./docs/spike/27-アーキテクチャテストの調査.md)
 
 ### task
 
@@ -26,6 +27,7 @@
 - [22-GitHooksをLeftHookに変更する](./docs/task/22-GitHooksをLeftHookに変更する.md)
 - [33-npmとnodeのバージョン固定](./docs/task/33-npmとnodeのバージョン固定.md)
 - [35-コメント規約の作成](./docs/task/36-コメント規約の作成.md)
+- [37-アーキテクチャの決定](./docs/task/37-アーキテクチャの決定.md)
 
 ### bug
 
