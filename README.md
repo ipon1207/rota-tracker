@@ -1,5 +1,11 @@
 # Rota Tracker
 
+## コーディング規約
+
+### コメント規約
+
+- [コメント規約](./docs/COMMENT_GUIDE.md)
+
 ## 学習ログリンク
 
 ### spike
