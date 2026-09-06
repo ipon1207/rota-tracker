@@ -1,4 +1,5 @@
 using WheelTracker.Api.Data;
+using WheelTracker.Api.Endpoints;
 
 // WHY: DB側の列名が snake_case のため、PascalCase のプロパティへ自動マッピングさせる
 // NOTE: アプリ全体に効くグローバル設定
@@ -21,6 +22,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/api/projects", async (ProjectRepository repo) => await repo.GetAllAsync());
+app.RegisterProjectItemsEndPoints();
 
 app.Run();
