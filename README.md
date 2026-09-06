@@ -14,6 +14,7 @@
 - [19-Dapperで接続を供給するパターンについて調べる](./docs/spike/19-Dapperで接続を供給するパターンについて調べる.md)
 - [27-アーキテクチャテストの調査](./docs/spike/27-アーキテクチャテストの調査.md)
 - [28-ドキュメント生成ライブラリ](./docs/spike/28-ドキュメント生成ライブラリ.md)
+- [30-Storybook](./docs/spike/30-Storybook.md)
 
 ### task
 
