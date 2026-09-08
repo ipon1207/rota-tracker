@@ -2,7 +2,16 @@
   "name": "rota-tracker",
   "private": true,
   "description": "リポジトリ全体の開発ツール置き場",
+  "scripts": {
+    "dev": "npm run db:up && concurrently -k -n api,web -c magenta,cyan \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "dotnet run --project api/WheelTracker.Api",
+    "dev:web": "npm run dev --prefix web",
+    "db:up": "docker compose --env-file db/.env -f db/docker-compose.yaml up -d --wait",
+    "db:down": "docker compose --env-file db/.env -f db/docker-compose.yaml down",
+    "db:logs": "docker compose --env-file db/.env -f db/docker-compose.yaml logs -f"
+  },
   "devDependencies": {
+    "concurrently": "^10.0.5",
     "lefthook": "^2.1.12"
   },
   "engines": {
