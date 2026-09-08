@@ -3,7 +3,7 @@
 親規約: [コメント規約.md](./COMMENT_GUIDE.md)
 対象: C# / .NET / ASP.NET Core / Dapper / SQL Server / Serilog / xUnit
 
-## 1. XMLドキュメントコメントの基本
+## XMLドキュメントコメントの基本
 
 ### 使用するタグ
 
@@ -58,7 +58,7 @@ public async Task<IReadOnlyList<Employee>> GetUnsubmittedAsync(int periodId)
 
 **書けないタグは省く**: 空欄を埋めるために型を日本語訳しない
 
-## 2. `<inheritdoc/>` を基本とする
+## `<inheritdoc/>` を基本とする
 
 インターフェース側に契約を書き、実装クラスは1行で継承する
 
@@ -91,7 +91,7 @@ public sealed class EvaluationRepository : IEvaluationRepository
 - 実装固有の注意がある場合のみ、`<inheritdoc/>` に続けて `<remarks>` を足す
 - `<summary>` を実装側で書き直さない（修正はインターフェース側で行う）
 
-## 3. DTO / レコード / エンティティ
+## DTO / レコード / エンティティ
 
 プロパティ単位に `<summary>` を書く
 
@@ -123,11 +123,11 @@ public sealed record EvaluationScore
 - **null の意味**（未設定 / 対象外 / 未取得 のどれか）
 - **不変条件**（「このリストは必ず1件以上」など）
 
-## 4. 静的解析で辿れない依存
+## 静的解析で辿れない依存
 
 **Find All References が0件に見えるが実際は使われている**もの、および**リネームがコンパイルエラーにならない**ものは必ず書く
 
-### 4.1 Dapper でマップされるクラス
+### Dapper でマップされるクラス
 
 ```csharp
 /// <summary>
@@ -141,7 +141,7 @@ public sealed record EvaluationScore
 public sealed class UnsubmittedRow
 ```
 
-### 4.2 DI コンテナ経由でのみ解決される型
+### DI コンテナ経由でのみ解決される型
 
 ```csharp
 /// <remarks>
@@ -150,11 +150,11 @@ public sealed class UnsubmittedRow
 /// </remarks>
 ```
 
-### 4.3 リフレクション / シリアライザ経由で使われるメンバー
+### リフレクション / シリアライザ経由で使われるメンバー
 
 未使用に見えるコンストラクタ・プロパティ・setterには、誰が使っているかを書く
 
-### 4.4 数値として永続化される列挙型
+### 数値として永続化される列挙型
 
 不可逆な決定のため、DESIGN_NOTES への記録対象
 
@@ -176,7 +176,7 @@ public enum EvaluationStatus
 }
 ```
 
-## 5. 抑止コメント
+## 抑止コメント
 
 `#pragma warning disable` / `#nullable disable` / `[SuppressMessage]` には、**理由と解除条件**を併記する
 
@@ -189,9 +189,9 @@ public enum EvaluationStatus
 - 抑止範囲は必要最小限にし、`#pragma warning restore` で必ず閉じる
 - ファイル冒頭や `.csproj` 全体での抑止は原則禁止。行う場合は、抑止箇所に理由と解除条件を書く
 
-## 6. 領域別の指針
+## 領域別の指針
 
-### 6.1 コントローラー / エンドポイント
+### エンドポイント
 
 - 認可要件、想定ステータスコード、冪等性の有無を `<remarks>` に書く
 - リクエスト・レスポンスの形は型とOpenAPIスキーマが持つため、繰り返さない
@@ -255,29 +255,3 @@ public async Task 締切時刻ちょうどの提出は受理される()
 ```csharp
 [Fact(Skip = "CI環境にSQL Serverが未構築のため")]
 ```
-
-## 7. 強制手段
-
-### CS1591（ドキュメントコメント欠落の検出）
-
-`.csproj` に以下を追加すると、public メンバーのXMLドキュメントコメント欠落が警告になる
-
-```xml
-<PropertyGroup>
-  <GenerateDocumentationFile>true</GenerateDocumentationFile>
-</PropertyGroup>
-```
-
-- 導入直後は**警告のまま運用する**
-- 定着後、プロジェクト単位で `<WarningsAsErrors>CS1591</WarningsAsErrors>` に引き上げる
-- 生成コードは `<NoWarn>` または対象ディレクトリの除外で対応する
-
-### 限界
-
-CS1591 は**タグが存在するかどうかしか判定しない**
-
-`/// <summary>ユーザーを取得する</summary>` のような、型を日本語訳しただけのコメントは通過する
-
-- 欠落の検出はCS1591
-- 内容の質は AIレビュー + 人間のレビューで担保する
-- **「書いていないこと」と同じ重さで「意味なく書いてあること」を指摘する**
