@@ -1,5 +1,46 @@
 # Rota Tracker
 
+## 開発環境の起動
+
+リポジトリのルートで以下を実行すると、DBコンテナ・API・フロントエンドがまとめて起動します。
+
+```bash
+npm install
+npm run dev
+```
+
+| 対象 | URL |
+| --- | --- |
+| フロントエンド | <http://localhost:5173> |
+| API | <http://localhost:5243> |
+| DB | localhost:14330 (SQL Server) |
+
+`npm run dev` は次の順で処理します。
+
+1. `docker compose up -d --wait` でDBコンテナを起動し、ヘルスチェックが通るまで待機する
+2. `dotnet run` と `vite` を並列で起動する
+
+Ctrl+CでAPIとフロントエンドは停止しますが、DBコンテナは起動したままです。停止する場合は `npm run db:down` を実行してください。
+
+### 個別のスクリプト
+
+| スクリプト | 内容 |
+| --- | --- |
+| `npm run dev:api` | APIのみ起動 |
+| `npm run dev:web` | フロントエンドのみ起動 |
+| `npm run db:up` | DBコンテナを起動 (ヘルスチェック待ち) |
+| `npm run db:down` | DBコンテナを停止 |
+| `npm run db:logs` | DBコンテナのログを追跡 |
+
+### 事前準備
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) が起動していること
+- `db/.env` (Git管理外) にSAパスワードを定義していること
+
+```ini
+MSSQL_SA_PASSWORD={パスワード}
+```
+
 ## コーディング規約
 
 ### コメント規約
