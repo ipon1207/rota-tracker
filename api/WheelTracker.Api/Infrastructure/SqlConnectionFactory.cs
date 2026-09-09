@@ -1,6 +1,6 @@
 using Microsoft.Data.SqlClient;
 
-namespace WheelTracker.Api.Data;
+namespace WheelTracker.Api.Infrastructure;
 
 /// <summary>
 /// SqlConnectionのファクトリクラス

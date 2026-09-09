@@ -1,5 +1,5 @@
-using WheelTracker.Api.Data;
-using WheelTracker.Api.Endpoints;
+using WheelTracker.Api.Features.Projects;
+using WheelTracker.Api.Infrastructure;
 
 // WHY: DB側の列名が snake_case のため、PascalCase のプロパティへ自動マッピングさせる
 // NOTE: アプリ全体に効くグローバル設定

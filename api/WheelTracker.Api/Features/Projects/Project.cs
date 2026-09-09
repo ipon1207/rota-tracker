@@ -1,4 +1,4 @@
-namespace WheelTracker.Api.Data;
+namespace WheelTracker.Api.Features.Projects;
 
 /// <summary>
 /// Projectテーブルのレコード構造
