@@ -1,8 +1,18 @@
 # Rota Tracker
 
+## 開発環境のセットアップ
+
+このリポジトリを `clone` したら、以下のコマンドを実行する
+
+ルートディレクトリとフロントエンドのパッケージインストールが走る
+
+```bash
+npm run setup
+```
+
 ## 開発環境の起動
 
-リポジトリのルートで以下を実行すると、DBコンテナ・API・フロントエンドがまとめて起動します。
+リポジトリのルートで以下を実行すると、DBコンテナ・API・フロントエンドがまとめて起動
 
 ```bash
 npm install
@@ -15,12 +25,12 @@ npm run dev
 | API | <http://localhost:5243> |
 | DB | localhost:14330 (SQL Server) |
 
-`npm run dev` は次の順で処理します。
+`npm run dev` は次の順で処理
 
 1. `docker compose up -d --wait` でDBコンテナを起動し、ヘルスチェックが通るまで待機する
 2. `dotnet run` と `vite` を並列で起動する
 
-Ctrl+CでAPIとフロントエンドは停止しますが、DBコンテナは起動したままです。停止する場合は `npm run db:down` を実行してください。
+Ctrl+CでAPIとフロントエンドは停止するが、DBコンテナは起動したままのため、停止する場合は `npm run db:down` を実行する
 
 ### 個別のスクリプト
 
