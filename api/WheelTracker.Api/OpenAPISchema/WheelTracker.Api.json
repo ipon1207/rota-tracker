@@ -8,7 +8,7 @@
     "/api/projects": {
       "get": {
         "tags": [
-          "ProjectItemsEndpoints"
+          "ProjectEndpoints"
         ],
         "responses": {
           "200": {
@@ -68,7 +68,7 @@
   },
   "tags": [
     {
-      "name": "ProjectItemsEndpoints"
+      "name": "ProjectEndpoints"
     }
   ]
 }
