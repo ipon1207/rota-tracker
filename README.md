@@ -91,6 +91,7 @@ MSSQL_SA_PASSWORD={パスワード}
 - [33-npmとnodeのバージョン固定](./docs/task/33-npmとnodeのバージョン固定.md)
 - [35-コメント規約の作成](./docs/task/36-コメント規約の作成.md)
 - [37-アーキテクチャの決定](./docs/task/37-アーキテクチャの決定.md)
+- [43-アーキテクチャテストの導入](./docs/task/43-アーキテクチャテストの導入)
 - [49-dotnet周りのバージョン固定作業](./docs/task/49-dotnet周りのバージョン固定作業.md)
 
 ### bug
