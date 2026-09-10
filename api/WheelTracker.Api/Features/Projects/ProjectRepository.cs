@@ -1,7 +1,8 @@
 using Dapper;
 using Microsoft.Data.SqlClient;
+using WheelTracker.Api.Infrastructure;
 
-namespace WheelTracker.Api.Data;
+namespace WheelTracker.Api.Features.Projects;
 
 /// <summary>
 /// projectテーブルのデータアクセスクラス

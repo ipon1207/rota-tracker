@@ -1,124 +1,5 @@
 # バックエンドアーキテクチャ
 
-## Minimal APIの運用
-
-- [ASP.NET Core Minimal API を本番でも大規模でも使えるように構成する](https://qiita.com/takashiuesaka/items/654c6e0d0bb7c92854a8)
-- [Organizing ASP.NET Core Minimal APIs](https://www.tessferrandez.com/blog/2023/10/31/organizing-minimal-apis.html)
-
-ASP.NET CoreではMVCスタイルの構造と**Minimal API**スタイルの構造を選択することができる
-
-```CSharp
-var bulider = WebApplication.CreateBuilder(args);
-var app = builder.Builde();
-
-app.MapGet("/", () => "Hello, world");
-
-app.Run();
-```
-
-→ 今回はMinimal APIスタイルを選択する
-
-「Minimal API」という名前から小規模な開発にしか向いていないと誤解されるが、その原因は上記のコードのように `Program.cs` にすべてを実装しようとするから
-
-エンドポイントを分割する方法を確立することで中・大規模開発を適したものにできる
-
-### 拡張メソッドを使用してエンドポイントを構成する
-
-```CSharp
-using Microsoft.AspNetCore.Http.HttpResults;
-using WheelTracker.Api.Data;
-
-namespace WheelTracker.Api.Endpoints;
-
-public static class ProjectItemsEndPoints
-{
-    public static void RegisterProjectItemsEndPoints(this WebApplication app)
-    {
-        app.MapGet("/api/projects", async Task<Ok<IReadOnlyList<Project>>> (ProjectRepository repo) =>
-            TypedResults.Ok(await repo.GetAllAsync())
-        );
-    }
-}
-```
-
-上記のコード例のように、**拡張メソッド**を使用することで、`Program.cs` ファイルの書き方は以下のようになる
-
-```CSharp
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
-
-app.RegisterProjectItemsEndPoints();
-
-app.Run();
-```
-
-- `EndPoints` フォルダ内に作成することを想定している？らしい
-
-### `Results` の代わりに `TypedResults` を使用する
-
-```CSharp
-app.MapGet("/api/projects", async (ProjectRepository repo) => 
-  await repo.GetAllAsync()
-);
-```
-
-`TypedResults` では、戻り値の型が推測されるため、`.Produces()` 属性をスキップできる
-
-```CSharp
-app.MapGet("/api/projects", async Task<Ok<IReadOnlyList<Project>>> (ProjectRepository repo) =>
-  TypedResults.Ok(await repo.GetAllAsync())
-);
-```
-
-- `GetAllAsync()` が返すのは `IReadOnlyList<Project>` で複数件のため、`Results<Ok<T>, NotFound>` を書く必要はない
-
-### エンドポイントの登録から関数を分離する
-
-```CSharp
-using Microsoft.AspNetCore.Http.HttpResults;
-using WheelTracker.Api.Data;
-
-namespace WheelTracker.Api.Endpoints;
-
-public static class ProjectItemsEndPoints
-{
-    public static void RegisterProjectItemsEndPoints(this WebApplication app)
-    {
-        app.MapGet("/api/projects", GetAllProjectsAsync);
-    }
-
-    static async Task<Ok<IReadOnlyList<Project>>> GetAllProjectsAsync(ProjectRepository repo) =>
-        TypedResults.Ok(await repo.GetAllAsync());
-}
-```
-
-- `RegisterProjectItemEndPoints` メソッド内に `app.MapGet("/~", メソッド名);` で追加していけばよい
-
-## エンドポイントのグループ化
-
-```CSharp
-using Microsoft.AspNetCore.Http.HttpResults;
-using WheelTracker.Api.Data;
-
-namespace WheelTracker.Api.Endpoints;
-
-public static class ProjectItemsEndPoints
-{
-    public static void RegisterProjectItemsEndPoints(this WebApplication app)
-    {
-        RouteGroupBuilder projectsItems = app.MapGroup("/api/projects");
-
-        projectsItems.MapGet("/", GetAllProjectsAsync);
-    }
-
-    static async Task<Ok<IReadOnlyList<Project>>> GetAllProjectsAsync(ProjectRepository repo) =>
-        TypedResults.Ok(await repo.GetAllAsync());
-}
-```
-
-- `/api/projects` を複数回記述する必要がなくなる
-- エンドポイントに認証を要求したり、タグ？を一度に追加できる（固有のエンドポイントにも追加できる）
-
 ## バックエンドのフォルダ構成
 
 上記の内容も考慮した案
@@ -211,7 +92,7 @@ flowchart TD
 
 1. **SQL を先に書く**
 
-    MSSQL 拡張で実行し、期待する行が返ることを確認してから CSharp に移す
+    MSSQL 拡張で実行し、期待する行が返ることを確認してから C# に移す
 2. **必要ならレスポンス用の record を作る**
 
     DB の行と形が違うときだけ。同じなら既存の record を使い回す

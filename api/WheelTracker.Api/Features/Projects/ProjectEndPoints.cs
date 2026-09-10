@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Http.HttpResults;
-using WheelTracker.Api.Data;
 
-namespace WheelTracker.Api.Endpoints;
+namespace WheelTracker.Api.Features.Projects;
 
-public static class ProjectItemsEndpoints
+public static class ProjectEndpoints
 {
     public static void RegisterProjectItemsEndPoints(this WebApplication app)
     {
