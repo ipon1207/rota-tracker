@@ -1,32 +1,6 @@
 # バックエンドアーキテクチャ
 
-## バックエンドのフォルダ構成
-
-上記の内容も考慮した案
-
-```PlainText
-api/WheelTracker.Api/
-├─ Program.cs
-├─ Features/
-│  ├─ Projects/
-│  │  ├─ ProjectEndpoints.cs
-│  │  ├─ ProjectRepository.cs
-│  │  └─ Project.cs
-│  ├─ Categories/
-│  ├─ Glossary/
-│  ├─ Roadmap/
-│  └─ Entries/
-│     ├─ EntryEndpoints.cs
-│     ├─ EntryRepository.cs
-│     ├─ Entry.cs
-│     └─ StatusTransition.cs
-├─ Infrastructure/
-│  └─ SqlConnectionFactory.cs
-└─ Extensions/
-   └─ ServiceCollectionExtensions.cs
-```
-
-### 依存の向き
+## 依存の向き
 
 ```PlainText
 Program.cs
