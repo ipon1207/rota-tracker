@@ -66,34 +66,9 @@ MSSQL_SA_PASSWORD={パスワード}
 
 - [バックエンドAPI設計指針](./docs/BACKEND_API_GUIDE.md)
 
-## 学習ログリンク
+## 学習ログ
 
-### spike
+タスクごとの決定・調査の記録。個別リンクは張らず、フォルダを直接見る
 
-- [1-バックエンド側の環境構築](./docs/spike/1-バックエンド側の環境構築.md)
-- [19-Dapperで接続を供給するパターンについて調べる](./docs/spike/19-Dapperで接続を供給するパターンについて調べる.md)
-- [27-アーキテクチャテストの調査](./docs/spike/27-アーキテクチャテストの調査.md)
-- [28-ドキュメント生成ライブラリ](./docs/spike/28-ドキュメント生成ライブラリ.md)
-- [30-Storybook](./docs/spike/30-Storybook.md)
-
-### task
-
-- [3-フロントエンド側の環境構築](./docs/task/3-フロントエンド側の環境構築.md)
-- [5-pre-commitの設定](./docs/task/5-pre-commitの設定.md)
-- [8-TypeScriptのstrictを有効にする](./docs/task/8-TypeScriptのstrictを有効にする.md)
-- [10-VSCodeの設定を整備する](./docs/task/10-VSCodeの設定を整備する.md)
-- [11-DB環境の構築](./docs/task/11-DB環境の構築.md)
-- [14-SQL Serverへの接続を確立する](./docs/task/14-SQLServerへの接続を確立する.md)
-- [16-OpenAPIドキュメントをファイルに出力する](./docs/task/16-OpenAPIドキュメントをファイルに出力する.md)
-- [17-TanStack Queryでプロジェクト一覧を表示する](./docs/task/17-TanStackQueryでプロジェクト一覧を表示する.md)
-- [22-GitHooksをLeftHookに変更する](./docs/task/22-GitHooksをLeftHookに変更する.md)
-- [26-動作確認の簡易化](./docs/task/26-動作確認の簡易化.md)
-- [33-npmとnodeのバージョン固定](./docs/task/33-npmとnodeのバージョン固定.md)
-- [35-コメント規約の作成](./docs/task/36-コメント規約の作成.md)
-- [37-アーキテクチャの決定](./docs/task/37-アーキテクチャの決定.md)
-- [43-アーキテクチャテストの導入](./docs/task/43-アーキテクチャテストの導入)
-- [49-dotnet周りのバージョン固定作業](./docs/task/49-dotnet周りのバージョン固定作業.md)
-
-### bug
-
--
+- [task](./docs/task/) — 実装したタスクの記録
+- [spike](./docs/spike/) — 実装前の調査記録
