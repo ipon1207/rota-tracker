@@ -1,49 +1,6 @@
 # フロントエンドアーキテクチャ
 
-## Reactフォルダ構成 (`web/src/`)
-
-機能別でフォルダを作成し、その機能フォルダ内で技術的な分類をするのがいいかも
-
-```PlainText
-web/src/
-├─ main.tsx
-├─ routes/
-│  ├─ router.tsx              ルート定義（1箇所に集約）
-│  ├─ RootLayout.tsx          ヘッダ・ナビの枠
-│  ├─ DashboardRoute.tsx
-│  ├─ ProjectListRoute.tsx
-│  ├─ ProjectDetailRoute.tsx
-│  ├─ RoadmapRoute.tsx
-│  └─ GlossaryRoute.tsx
-├─ features/
-│  ├─ projects/
-│  │  ├─ api.ts               queryOptions と fetch
-│  │  ├─ ProjectTable.tsx
-│  │  └─ ProjectGuide.tsx
-│  ├─ entries/
-│  │  ├─ api.ts
-│  │  ├─ EntryForm.tsx
-│  │  ├─ StatusBadge.tsx
-│  │  ├─ status.ts            純粋ロジック
-│  │  └─ status.test.ts
-│  ├─ glossary/
-│  ├─ roadmap/
-│  └─ progress/
-├─ components/
-│  ├─ ui/                     shadcn の生成物
-│  └─ AppNav.tsx              アプリ固有の共通部品
-├─ lib/
-│  ├─ api/
-│  │  ├─ schema.gen.ts        生成物
-│  │  └─ client.ts            fetch ラッパ
-│  ├─ queryClient.ts
-│  └─ utils.ts                cn()
-└─ demos/
-   └─ lru/
-      ├─ lru.ts
-      ├─ lru.test.ts
-      └─ LruDemo.tsx
-```
+機能別でフォルダを作成し、その機能フォルダ内で技術的な分類をする（`web/src/routes/` `features/` `components/` `lib/`）
 
 ## 依存の向き
 
