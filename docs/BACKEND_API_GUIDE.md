@@ -1,6 +1,6 @@
 # バックエンドAPI設計指針（HTTP契約）
 
-関連: [コメント規約](./COMMENT_GUIDE.md) / [バックエンドコメント規約詳細](./BACKEND_COMMENT_GUIDE.md) / [バックエンドアーキテクチャ](./task/37-バックエンドアーキテクチャ.md)
+関連: [コメント規約](./COMMENT_GUIDE.md) / [バックエンドコメント規約詳細](./BACKEND_COMMENT_GUIDE.md) / [バックエンドアーキテクチャ](./BACKEND_ARCHITECTURE.md)
 対象: ASP.NET Core Minimal API / OpenAPI / System.Text.Json / openapi-typescript
 
 ## 前提
@@ -63,7 +63,7 @@
 
 ### グループとクラスの命名
 
-`MapGroup` 1つがリソース1つに対応する（登録の書き方は [バックエンドアーキテクチャ](./task/37-バックエンドアーキテクチャ.md) を参照）
+`MapGroup` 1つがリソース1つに対応する（登録の書き方は [バックエンドアーキテクチャ](./BACKEND_ARCHITECTURE.md) を参照）
 
 **綴りは `Endpoints` で統一する**
 
