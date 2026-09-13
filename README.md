@@ -53,6 +53,10 @@ MSSQL_SA_PASSWORD={パスワード}
 
 ## コーディング規約
 
+### ドキュメント運用方針
+
+- [ドキュメント運用方針](./docs/DOCUMENT_POLICY.md)
+
 ### アーキテクチャ
 
 - [フロントエンドアーキテクチャ](./docs/FRONTEND_ARCHITECTURE.md)
