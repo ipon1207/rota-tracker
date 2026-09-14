@@ -97,6 +97,12 @@
   // 必ず同じ内容に保つこと（片方だけ足すと補完とソートがズレる）
   "tailwindCSS.classFunctions": [ "cn", "cva", "clsx", "twMerge" ],
 
+  // クラス名は className="..." という文字列の中に書くため、文字列内でも
+  // 入力中に補完候補を出す。VSCode の既定 (strings: "off") のままだと
+  // 引用符やスペースの直後にしか候補が出ず、補完が効かないように見える。
+  // ユーザー設定で off にしていてもワークスペース設定が優先される。
+  "editor.quickSuggestions": { "strings": "on" },
+
   // VSCode 標準の CSS 言語機能は Tailwind v4 の @theme / @custom-variant を
   // 知らないため "Unknown at rule" を警告として出す。
   // src/index.css は実際に両方を使っているので警告を止める。
