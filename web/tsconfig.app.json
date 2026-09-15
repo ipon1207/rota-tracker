@@ -30,5 +30,5 @@
     /* 型チェックを厳格に行う */
     "strict": true
   },
-  "include": ["src"]
+  "include": ["src", ".storybook/**/*"]
 }

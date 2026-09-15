@@ -1,4 +1,6 @@
-import type { Preview } from "@storybook/react-vite";
+import type { Preview } from '@storybook/react-vite';
+
+import '../src/index.css';
 
 const preview: Preview = {
   parameters: {
@@ -13,8 +15,16 @@ const preview: Preview = {
       // 'todo' - show a11y violations in the test UI only
       // 'error' - fail CI on a11y violations
       // 'off' - skip a11y checks entirely
-      test: "todo",
+      test: 'todo',
     },
+    backgrounds: {
+      options: {
+        rota: { name: 'Rota', value: '#F6F6F2' },
+      },
+    },
+  },
+  initialGlobals: {
+    backgrounds: { value: 'rota' },
   },
 };
 
