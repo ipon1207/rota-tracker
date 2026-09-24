@@ -8,8 +8,11 @@
     "/api/projects": {
       "get": {
         "tags": [
-          "ProjectEndpoints"
+          "Projects"
         ],
+        "summary": "プロジェクト一覧の取得",
+        "description": "登録済みプロジェクトをカテゴリ・プロジェクトの表示順で全件返す。該当が0件の場合は空配列を返す。",
+        "operationId": "GetAllProjects",
         "responses": {
           "200": {
             "description": "OK",
@@ -68,7 +71,7 @@
   },
   "tags": [
     {
-      "name": "ProjectEndpoints"
+      "name": "Projects"
     }
   ]
 }

@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+using Scalar.AspNetCore;
 using WheelTracker.Api.Features.Projects;
 using WheelTracker.Api.Infrastructure;
 
@@ -10,6 +12,8 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 
+// APIが受け取るJSONの型を厳格化
+builder.Services.ConfigureHttpJsonOptions(options => options.SerializerOptions.NumberHandling = JsonNumberHandling.Strict);
 builder.Services.AddSingleton<SqlConnectionFactory>();
 builder.Services.AddScoped<ProjectRepository>();
 
@@ -18,6 +22,8 @@ WebApplication app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    // NOTE: UIは /scalar で開ける（開発環境のみ）
+    app.MapScalarApiReference(options => options.WithTitle("WheelTracker API"));
 }
 
 app.UseHttpsRedirection();

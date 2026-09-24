@@ -6,9 +6,15 @@ public static class ProjectEndpoints
 {
     public static void RegisterProjectItemsEndPoints(this WebApplication app)
     {
-        RouteGroupBuilder projectItems = app.MapGroup("/api/projects");
+        // NOTE: WithTags はScalarのサイドバーでのグループ名になる（未指定だとクラス名が使われる）
+        RouteGroupBuilder projectItems = app.MapGroup("/api/projects")
+            .WithTags("Projects");
 
-        projectItems.MapGet("/", GetAllProjectsAsync);
+        // WHY: メソッドグループ渡しのハンドラはXMLコメントがOpenAPIに反映されないため、明示的に指定する
+        projectItems.MapGet("/", GetAllProjectsAsync)
+            .WithName("GetAllProjects")
+            .WithSummary("プロジェクト一覧の取得")
+            .WithDescription("登録済みプロジェクトをカテゴリ・プロジェクトの表示順で全件返す。該当が0件の場合は空配列を返す。");
     }
 
     /// <summary>

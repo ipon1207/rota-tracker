@@ -1,6 +1,6 @@
 @WheelTracker.Api_HostAddress = http://localhost:5243
 
-GET {{WheelTracker.Api_HostAddress}}/weatherforecast/
+GET {{WheelTracker.Api_HostAddress}}/api/projects/
 Accept: application/json
 
 ###
