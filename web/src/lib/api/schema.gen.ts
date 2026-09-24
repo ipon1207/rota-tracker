@@ -11,26 +11,12 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Project"][];
-                    };
-                };
-            };
-        };
+        /**
+         * プロジェクトの一覧を見る
+         * @description 登録済みのプロジェクトを、カテゴリの表示順 → カテゴリ内でのプロジェクトの表示順で返す
+         *     登録が1件もない場合は、空の一覧を返す（エラーにはならない）
+         */
+        get: operations["GetAllProjects"];
         put?: never;
         post?: never;
         delete?: never;
@@ -43,19 +29,30 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** @description Projectテーブルのレコード構造 */
+        /** @description 車輪の再発明として取り組むプロジェクト（自作 ls コマンド、JSONパーサなど） */
         Project: {
-            /** @description id */
+            /**
+             * @description プロジェクトを一意に識別するID
+             *     例: cli-ls
+             */
             id: string;
-            /** @description category_id */
+            /**
+             * @description 所属するカテゴリのID
+             *     例: cli
+             */
             categoryId: string;
-            /** @description title */
+            /**
+             * @description プロジェクトの名前
+             *     例: 自作 ls コマンド
+             */
             title: string;
             /**
              * Format: int32
-             * @description difficulty
+             * @description 難易度
+             *     1〜3の整数（1が易しい、3が難しい）
+             *     null は「未設定」を意味する
              */
-            difficulty: null | number | string;
+            difficulty: null | number;
         };
     };
     responses: never;
@@ -65,4 +62,25 @@ export interface components {
     pathItems: never;
 }
 export type $defs = Record<string, never>;
-export type operations = Record<string, never>;
+export interface operations {
+    GetAllProjects: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Project"][];
+                };
+            };
+        };
+    };
+}

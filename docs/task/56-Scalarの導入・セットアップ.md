@@ -1,4 +1,22 @@
-using System.Text.Json.Serialization;
+# Scalarの導入・セットアップ
+
+- [Minimal API で OpenAPI / Scalar を利用する方法](https://aspnet.keicode.com/minimalapi/minimalapi-how-to-use-openapi-scalar.php)
+
+## パッケージの追加
+
+`.csproj` があるディレクトリで以下を実行
+
+```bash
+dotnet package add Scalar.AspNetCore
+```
+
+## Minimal API で最小構成
+
+- `builder.Services.AddOpenApi()`
+- `app.MapOpenApi()`
+- `app.MapScalarApiReference()`
+
+```CSharp:Program.cs
 using Scalar.AspNetCore;
 using WheelTracker.Api.Features.Projects;
 using WheelTracker.Api.Infrastructure;
@@ -10,16 +28,8 @@ Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// NOTE: Scalar のページ見出しと概要になる
-builder.Services.AddOpenApi(options => options.AddDocumentTransformer((document, _, _) =>
-{
-    document.Info.Title = "WheelTracker API";
-    document.Info.Description = "車輪の再発明（既存ツールやライブラリの自作）に取り組むプロジェクトと、その進捗を記録・参照するためのAPI";
-    return Task.CompletedTask;
-}));
+builder.Services.AddOpenApi();
 
-// APIが受け取るJSONの型を厳格化
-builder.Services.ConfigureHttpJsonOptions(options => options.SerializerOptions.NumberHandling = JsonNumberHandling.Strict);
 builder.Services.AddSingleton<SqlConnectionFactory>();
 builder.Services.AddScoped<ProjectRepository>();
 
@@ -28,8 +38,7 @@ WebApplication app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    // NOTE: UIは /scalar で開ける（開発環境のみ）
-    app.MapScalarApiReference(options => options.WithTitle("WheelTracker API"));
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
@@ -37,3 +46,4 @@ app.UseHttpsRedirection();
 app.RegisterProjectItemsEndPoints();
 
 app.Run();
+```
