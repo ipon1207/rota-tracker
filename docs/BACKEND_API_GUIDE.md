@@ -284,10 +284,12 @@ XMLコメントが `description` になるのは**型とプロパティ**の階�
 ### `MapGroup` に `.WithTags()` を付ける
 
 ```csharp
-RouteGroupBuilder projects = app.MapGroup("/api/projects").WithTags("Projects");
+RouteGroupBuilder projects = app.MapGroup("/api/projects").WithTags("プロジェクト");
 ```
 
 付けないとクラス名がそのままタグ名になり、`Endpoints` のような実装都合の語が契約に漏れる
+
+タグ名の決め方は7章を参照
 
 ### 生成物の扱い
 
@@ -296,7 +298,114 @@ RouteGroupBuilder projects = app.MapGroup("/api/projects").WithTags("Projects");
 
 PRテンプレートのセルフチェック「API を変更した → OpenAPI を出力し直し、`openapi-typescript` で型を再生成した」がこれにあたる
 
-## 7. 強制の手段
+## 7. Scalar を設計書として読めるようにする
+
+Scalar（開発環境の `/scalar`）は、**上流・中流工程の人**が読む
+
+この人たちがScalarから判断したいのは次の3つで、基本設計書の「機能一覧」「入出力項目定義」「業務ルール」に相当する
+
+- どの業務操作ができるか
+- 入出力の各項目が業務上なにを意味するか
+- どんな条件で失敗し、サーバが何を自動で行うか
+
+コードを読まずに、これらを判断できる状態を保つ
+
+### 表示位置と書く場所の対応
+
+| Scalarでの表示 | 書く場所 | 書く内容 |
+| --- | --- | --- |
+| ページの見出し・概要 | `AddOpenApi` の document transformer | アプリの目的を1〜2文 |
+| サイドバーのグループ | `.WithTags()` | 業務機能の名前 |
+| エンドポイント名 | `.WithSummary()` | 利用者から見た操作 |
+| エンドポイントの説明 | `.WithDescription()` | 結果・業務ルール・失敗する条件 |
+| 項目の説明 | record の `<param>` | 業務上の意味・取りうる値・`null` の意味 |
+
+```csharp
+// Program.cs
+builder.Services.AddOpenApi(options => options.AddDocumentTransformer((document, _, _) =>
+{
+    document.Info.Title = "WheelTracker API";
+    document.Info.Description = "学習プロジェクトの進捗を記録・参照するためのAPI";
+    return Task.CompletedTask;
+}));
+```
+
+### 1. 画面の表記と用語集の言葉を正とする
+
+同じものを「プロジェクト」「課題」「案件」と書き分けない
+
+### 2. 実装を指す語を `///` と `.With〜()` に書かない
+
+テーブル名・列名・SQL・`record`・`Dapper` などは、上流の読み手には意味を持たない
+
+実装の事情は `// NOTE:` `// WHY:` に書き分ける
+
+`///` と `.With〜()` は**外に公開される説明**、`//` は**開発者向けのメモ**とする
+
+### 3. `.WithSummary()` は「利用者が何をするか」で書く
+
+```csharp
+// 基本形
+.WithSummary("プロジェクトの一覧を見る")
+```
+
+```csharp
+// アンチパターン
+.WithSummary("projectテーブルを全件SELECT")
+```
+
+### 4. `.WithDescription()` には業務ルールと失敗条件を書く
+
+型とステータスコードは Scalar が表示するため、そこから読めない**業務上の約束**を書く
+
+書く順番:
+
+1. 何が返るか / 何が起きるか（並び順、0件のときの扱い）
+2. サーバが自動で行うこと（例: 「ステータスを完了にすると、完了日に当日が入る」）
+3. 失敗する条件を業務の言葉で（例: 「着手日が完了日より後の場合は受け付けない」）
+
+```csharp
+// 基本形
+.WithDescription("""
+    登録済みのプロジェクトを、カテゴリの表示順 → プロジェクトの表示順で返す
+    登録が1件もない場合は、空の一覧を返す（エラーにはならない）
+    """)
+```
+
+2 と 3 は、上流の人が要件と突き合わせて確認する対象になる
+
+ここに書かれていない業務ルールは**ないものとみなされる**
+
+### 5. `<param>` は項目定義として書く
+
+4章の「`<param>` に列名を書かない」と同じ内容を、入出力項目定義の粒度で埋める
+
+- 業務上の意味
+- 取りうる値と、その意味（区分値なら全件）
+- `null` のときの業務上の意味
+- 単位・範囲
+
+型名・必須かどうかは Scalar が表示するので書かない
+
+### 6. タグは業務機能の単位で、日本語で付ける
+
+1章の「`MapGroup` 1つがリソース1つ」に対応して、タグ名はリソースの業務上の呼び名とする
+
+```csharp
+RouteGroupBuilder projects = app.MapGroup("/api/projects").WithTags("プロジェクト");
+```
+
+タグ名は `schema.gen.ts` の型には影響しない
+
+### 確認のしかた
+
+APIを変えたPRでは、Scalarの該当ページを開き、**コードを開かずに次の3つに答えられるか**を確認する
+
+- この操作で何ができるか
+- 各項目に何を入れればよいか / 何が返るか
+- どんなときに失敗するか
+
+## 8. 強制の手段
 
 | 対象 | 手段 | 初期設定 |
 | --- | --- | --- |
@@ -315,3 +424,5 @@ PRテンプレートのセルフチェック「API を変更した → OpenAPI �
 - `<param>` が列名や型の日本語訳になっていないか
 - `.WithName()` / `.WithSummary()` / `.WithTags()` が付いているか
 - エンドポイントの変更に対して、生成物の差分が同じPRに含まれているか
+- `///` と `.With〜()` に実装を指す語（テーブル名・列名・SQL など）がないか
+- `.WithDescription()` に、サーバが自動で行うことと失敗する条件が書かれているか

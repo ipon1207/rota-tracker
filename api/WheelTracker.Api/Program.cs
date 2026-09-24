@@ -10,7 +10,13 @@ Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddOpenApi();
+// NOTE: Scalar のページ見出しと概要になる
+builder.Services.AddOpenApi(options => options.AddDocumentTransformer((document, _, _) =>
+{
+    document.Info.Title = "WheelTracker API";
+    document.Info.Description = "車輪の再発明（既存ツールやライブラリの自作）に取り組むプロジェクトと、その進捗を記録・参照するためのAPI";
+    return Task.CompletedTask;
+}));
 
 // APIが受け取るJSONの型を厳格化
 builder.Services.ConfigureHttpJsonOptions(options => options.SerializerOptions.NumberHandling = JsonNumberHandling.Strict);
