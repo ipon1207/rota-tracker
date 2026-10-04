@@ -1,7 +1,7 @@
 # バックエンドコメント規約詳細（C# / .NET）
 
 親規約: [コメント規約.md](./COMMENT_GUIDE.md)
-対象: C# / .NET / ASP.NET Core / Dapper / SQL Server / Serilog / xUnit
+対象: C# / .NET / ASP.NET Core / Dapper / PostgreSQL / Serilog / xUnit
 
 ## XMLドキュメントコメントの基本
 
@@ -253,5 +253,5 @@ public async Task 締切時刻ちょうどの提出は受理される()
 - `Skip` を指定する場合は、理由と解除条件を必須とする
 
 ```csharp
-[Fact(Skip = "CI環境にSQL Serverが未構築のため")]
+[Fact(Skip = "CI環境にPostgreSQLが未構築のため")]
 ```
