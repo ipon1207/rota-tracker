@@ -1,5 +1,5 @@
 using Dapper;
-using Microsoft.Data.SqlClient;
+using Npgsql;
 using WheelTracker.Api.Infrastructure;
 
 namespace WheelTracker.Api.Features.Projects;
@@ -32,7 +32,7 @@ public sealed class ProjectRepository(SqlConnectionFactory factory)
                 category.sort_order, project.sort_order
         """;
 
-        using SqlConnection connection = factory.Create();
+        using NpgsqlConnection connection = factory.Create();
         IEnumerable<Project> rows = await connection.QueryAsync<Project>(sql);
         return [.. rows];
     }
