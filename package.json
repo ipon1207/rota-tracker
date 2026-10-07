@@ -9,7 +9,8 @@
     "dev:web": "npm run dev --prefix web",
     "db:up": "docker compose --env-file db/.env -f db/docker-compose.yaml up -d --wait",
     "db:down": "docker compose --env-file db/.env -f db/docker-compose.yaml down",
-    "db:logs": "docker compose --env-file db/.env -f db/docker-compose.yaml logs -f"
+    "db:logs": "docker compose --env-file db/.env -f db/docker-compose.yaml logs -f",
+    "wiki:build": "node scripts/build-wiki.mjs .wiki-build"
   },
   "devDependencies": {
     "concurrently": "^10.0.5",

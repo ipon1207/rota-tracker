@@ -84,5 +84,7 @@ POSTGRES_PASSWORD={パスワード}
 
 タスクごとの決定・調査の記録。個別リンクは張らず、フォルダを直接見る
 
+[Wiki](https://github.com/ipon1207/rota-tracker/wiki) のサイドバーからも一覧できる（`docs/` から自動同期）
+
 - [task](./docs/task/) — 実装したタスクの記録
 - [spike](./docs/spike/) — 実装前の調査記録

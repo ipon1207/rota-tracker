@@ -1,0 +1,50 @@
+# docs/ の原本から Wiki を生成して同期する（リポジトリ → Wiki の一方向）
+name: wiki-sync
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "scripts/build-wiki.mjs"
+      - ".github/workflows/wiki-sync.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wiki-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Build wiki pages
+        run: node scripts/build-wiki.mjs "$RUNNER_TEMP/wiki-build"
+
+      - name: Push to wiki
+        env:
+          # GITHUB_TOKEN で push できない場合は PAT を WIKI_TOKEN に登録する
+          TOKEN: ${{ secrets.WIKI_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          git clone --depth 1 "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.wiki.git" "$RUNNER_TEMP/wiki"
+          cd "$RUNNER_TEMP/wiki"
+          git rm -rq --ignore-unmatch .
+          cp -r "$RUNNER_TEMP/wiki-build/." .
+          git add -A
+          if git diff --cached --quiet; then
+            echo "変更なし"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "sync from ${GITHUB_REPOSITORY}@${GITHUB_SHA}"
+          git push origin HEAD
