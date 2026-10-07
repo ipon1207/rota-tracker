@@ -11,7 +11,7 @@ Features/Projects/ProjectRepository
    ↓
 Infrastructure/SqlConnectionFactory
    ↓
-Microsoft.Data.SqlClient
+Npgsql
 ```
 
 > [!NOTE] 横方向の依存について
@@ -66,7 +66,7 @@ flowchart TD
 
 1. **SQL を先に書く**
 
-    MSSQL 拡張で実行し、期待する行が返ることを確認してから C# に移す
+    `docker exec -it rota-tracker-db psql -U postgres -d rota_tracker` などで実行し、期待する行が返ることを確認してから C# に移す
 2. **必要ならレスポンス用の record を作る**
 
     DB の行と形が違うときだけ。同じなら既存の record を使い回す

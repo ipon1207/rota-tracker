@@ -1,9 +1,9 @@
-using Microsoft.Data.SqlClient;
+using Npgsql;
 
 namespace WheelTracker.Api.Infrastructure;
 
 /// <summary>
-/// SqlConnectionのファクトリクラス
+/// PostgreSQL への接続（NpgsqlConnection）のファクトリクラス
 /// </summary>
 /// <param name="configuration">アプリケーションの設定情報</param>
 public sealed class SqlConnectionFactory(IConfiguration configuration)
@@ -16,5 +16,5 @@ public sealed class SqlConnectionFactory(IConfiguration configuration)
     /// 接続を生成する
     /// </summary>
     /// <returns>データベース接続インスタンス</returns>
-    public SqlConnection Create() => new(_connectionString);
+    public NpgsqlConnection Create() => new(_connectionString);
 }

@@ -23,7 +23,7 @@ npm run dev
 | --- | --- |
 | フロントエンド | <http://localhost:5173> |
 | API | <http://localhost:5243> |
-| DB | localhost:14330 (SQL Server) |
+| DB | localhost:54320 (PostgreSQL) |
 
 `npm run dev` は次の順で処理
 
@@ -42,13 +42,23 @@ Ctrl+CでAPIとフロントエンドは停止するが、DBコンテナは起動
 | `npm run db:down` | DBコンテナを停止 |
 | `npm run db:logs` | DBコンテナのログを追跡 |
 
+### DBの初期化
+
+`db/schema.sql` と `db/seed.sql` は、データ用ボリュームが空の状態で初めてコンテナを起動したときだけ自動で流れる。
+スキーマやシードを変更して作り直したい場合は、ボリュームごと削除してから起動し直す
+
+```bash
+docker compose --env-file db/.env -f db/docker-compose.yaml down -v
+npm run db:up
+```
+
 ### 事前準備
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) が起動していること
-- `db/.env` (Git管理外) にSAパスワードを定義していること
+- `db/.env` (Git管理外) に postgres ユーザーのパスワードを定義していること
 
 ```ini
-MSSQL_SA_PASSWORD={パスワード}
+POSTGRES_PASSWORD={パスワード}
 ```
 
 ## コーディング規約
@@ -73,6 +83,8 @@ MSSQL_SA_PASSWORD={パスワード}
 ## 学習ログ
 
 タスクごとの決定・調査の記録。個別リンクは張らず、フォルダを直接見る
+
+[Wiki](https://github.com/ipon1207/rota-tracker/wiki) のサイドバーからも一覧できる（`docs/` から自動同期）
 
 - [task](./docs/task/) — 実装したタスクの記録
 - [spike](./docs/spike/) — 実装前の調査記録

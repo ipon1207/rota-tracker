@@ -1,15 +1,19 @@
 {
   "openapi": "3.1.1",
   "info": {
-    "title": "WheelTracker.Api | v1",
+    "title": "WheelTracker API",
+    "description": "車輪の再発明（既存ツールやライブラリの自作）に取り組むプロジェクトと、その進捗を記録・参照するためのAPI",
     "version": "1.0.0"
   },
   "paths": {
     "/api/projects": {
       "get": {
         "tags": [
-          "ProjectEndpoints"
+          "プロジェクト"
         ],
+        "summary": "プロジェクトの一覧を見る",
+        "description": "登録済みのプロジェクトを、カテゴリの表示順 → カテゴリ内でのプロジェクトの表示順で返す\r\n登録が1件もない場合は、空の一覧を返す（エラーにはならない）",
+        "operationId": "GetAllProjects",
         "responses": {
           "200": {
             "description": "OK",
@@ -41,34 +45,32 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "id"
+            "description": "プロジェクトを一意に識別するID\r\n例: cli-ls"
           },
           "categoryId": {
             "type": "string",
-            "description": "category_id"
+            "description": "所属するカテゴリのID\r\n例: cli"
           },
           "title": {
             "type": "string",
-            "description": "title"
+            "description": "プロジェクトの名前\r\n例: 自作 ls コマンド"
           },
           "difficulty": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
             "type": [
               "null",
-              "integer",
-              "string"
+              "integer"
             ],
-            "description": "difficulty",
+            "description": "難易度\r\n1〜3の整数（1が易しい、3が難しい）\r\nnull は「未設定」を意味する",
             "format": "int32"
           }
         },
-        "description": "Projectテーブルのレコード構造"
+        "description": "車輪の再発明として取り組むプロジェクト（自作 ls コマンド、JSONパーサなど）"
       }
     }
   },
   "tags": [
     {
-      "name": "ProjectEndpoints"
+      "name": "プロジェクト"
     }
   ]
 }
