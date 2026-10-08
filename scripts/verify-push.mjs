@@ -33,32 +33,6 @@ const readPushedShas = () => {
   return shas.length > 0 ? [...new Set(shas)] : [git(['rev-parse', 'HEAD'], repoRoot)];
 };
 
-// node_modules を丸ごと共有すると .tmp（tsbuildinfo）や .vite などのキャッシュが
-// 本体と混ざるため、パッケージだけをジャンクションで共有し、キャッシュ類は分離する
-const linkNodeModules = (sourceDir, targetDir) => {
-  if (!fs.existsSync(sourceDir)) return;
-  fs.mkdirSync(targetDir, { recursive: true });
-  for (const entry of fs.readdirSync(sourceDir, { withFileTypes: true })) {
-    if (entry.name.startsWith('.') && entry.name !== '.bin') continue;
-    const src = path.join(sourceDir, entry.name);
-    const dest = path.join(targetDir, entry.name);
-    if (entry.isDirectory() || entry.isSymbolicLink()) {
-      fs.symlinkSync(src, dest, 'junction');
-    } else {
-      fs.copyFileSync(src, dest);
-    }
-  }
-};
-
-// worktree 削除時にリンク先（本体の node_modules）まで辿られないよう、先にリンクだけ外す
-const unlinkNodeModules = (targetDir) => {
-  if (!fs.existsSync(targetDir)) return;
-  for (const name of fs.readdirSync(targetDir)) {
-    const dest = path.join(targetDir, name);
-    if (fs.lstatSync(dest).isSymbolicLink()) fs.unlinkSync(dest);
-  }
-};
-
 const run = (name, command, cwd) => {
   console.log(`\n▶ ${name}`);
   const result = spawnSync(command, { cwd, stdio: 'inherit', shell: true });
@@ -97,12 +71,16 @@ const verify = (sha) => {
 
   try {
     git(['worktree', 'add', '--detach', worktree, sha], repoRoot);
-    linkNodeModules(path.join(repoRoot, 'node_modules'), path.join(worktree, 'node_modules'));
-    linkNodeModules(path.join(repoRoot, 'web', 'node_modules'), path.join(worktree, 'web', 'node_modules'));
-    return runChecks(worktree);
+    // 本体の node_modules をジャンクションで共有すると、Vite がリンクを実体パスに解決して
+    // server.fs.allow（worktree 配下）の外と判定し、ブラウザモードのテストが読み込めない。
+    // そのため worktree 内に独立してインストールする（ルートの依存はチェックで使わないので web のみ）
+    const installed = run(
+      'web-install',
+      'npm ci --prefer-offline --no-audit --no-fund',
+      path.join(worktree, 'web'),
+    );
+    return installed && runChecks(worktree);
   } finally {
-    unlinkNodeModules(path.join(worktree, 'node_modules'));
-    unlinkNodeModules(path.join(worktree, 'web', 'node_modules'));
     spawnSync('git', ['worktree', 'remove', '--force', worktree], { cwd: repoRoot });
     fs.rmSync(tmpBase, { recursive: true, force: true });
     spawnSync('git', ['worktree', 'prune'], { cwd: repoRoot });
