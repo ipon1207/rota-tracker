@@ -9,29 +9,22 @@ pre-commit:
     - name: web-format
       root: "web/"
       glob: "*.{ts,tsx,js,jsx,json,css,html}"
-      run: npm run format:check
+      run: npm run format:check -- {staged_files}
 
     - name: web-lint
       root: "web/"
       glob: "*.{ts,tsx,js,jsx}"
-      run: npm run lint
+      run: npm run lint -- {staged_files}
 
     - name: api-format
       root: "api/"
       glob: "*.cs"
-      run: dotnet format --verify-no-changes
+      run: dotnet format --verify-no-changes --include {staged_files}
 
+# pre-pushは重いチェック
+# 作業中の未コミット・未追跡ファイルに影響されないよう、push対象のコミットを一時worktreeに展開して検証する
 pre-push:
-  parallel: false
   jobs:
-    - name: web-typecheck
-      root: "web/"
-      run: npm run typecheck
-
-    - name: web-test
-      root: "web/"
-      run: npm run test
-
-    - name: api-test
-      root: "api/"
-      run: dotnet test
+    - name: verify-pushed-commits
+      run: node scripts/verify-push.mjs
+      use_stdin: true

@@ -42,7 +42,8 @@
     "**/coverage/**",
     "**/playwright-report/**",
     "**/test-results/**",
-    "src/lib/api/schema.gen.ts"
+    "src/lib/api/schema.gen.ts",
+    "**/.storybook/**"
   ],
   "overrides": [
     {

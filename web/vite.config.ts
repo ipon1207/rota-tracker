@@ -1,21 +1,26 @@
+// https://vite.dev/config/
 import path from 'path';
 
 import babel from '@rolldown/plugin-babel';
+import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import react, { reactCompilerPreset } from '@vitejs/plugin-react';
+import { playwright } from '@vitest/browser-playwright';
 import { defineConfig } from 'vitest/config';
 
-// https://vite.dev/config/
+// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  plugins: [react(), babel({ presets: [reactCompilerPreset()] }), tailwindcss()],
+  plugins: [
+    react(),
+    babel({
+      presets: [reactCompilerPreset()],
+    }),
+    tailwindcss(),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(import.meta.dirname, './src'),
     },
-  },
-  test: {
-    include: ['src/**/*.test.{ts,tsx}'],
-    environment: 'node',
   },
   server: {
     proxy: {
@@ -24,5 +29,39 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+  },
+  test: {
+    projects: [
+      {
+        extends: true,
+        test: {
+          include: ['src/**/*.test.{ts,tsx}'],
+          environment: 'node',
+        },
+      },
+      {
+        extends: true,
+        plugins: [
+          // The plugin will run tests for the stories defined in your Storybook config
+          // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
+          storybookTest({
+            configDir: path.join(import.meta.dirname, '.storybook'),
+          }),
+        ],
+        test: {
+          name: 'storybook',
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright({}),
+            instances: [
+              {
+                browser: 'chromium',
+              },
+            ],
+          },
+        },
+      },
+    ],
   },
 });

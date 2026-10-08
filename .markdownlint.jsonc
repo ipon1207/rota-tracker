@@ -1,0 +1,9 @@
+{
+  // VS Code 拡張の既定値に合わせて行長チェックは無効にする
+  // （設定ファイルを置くと拡張の既定値が使われなくなるため、明示が必要）
+  "MD013": false,
+  // 折りたたみ表示（<details> / <summary>）は Markdown に代替がないため許可する
+  "MD033": {
+    "allowed_elements": ["details", "summary"]
+  }
+}
